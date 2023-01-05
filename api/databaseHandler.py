@@ -15,6 +15,10 @@ credentials = {
     'client_x509_cert_url': os.environ.get("type")
 }
 
+serviceAccount = gspread.service_account_from_dict(credentials)
+database = serviceAccount.open("Better Lectio")
+brugerDatabase = database.worksheet("Brugere")
+
 fetchFrequency = 60  # sek
 lastFetched = -1
 
@@ -25,10 +29,6 @@ def getAllRecords():
     global allRecords
 
     if time.time() > lastFetched + fetchFrequency:
-        serviceAccount = gspread.service_account_from_dict(credentials)
-        database = serviceAccount.open("Better Lectio")
-        brugerDatabase = database.worksheet("Brugere")
-
         allRecords = brugerDatabase.get_all_records()
         lastFetched = time.time()
 
