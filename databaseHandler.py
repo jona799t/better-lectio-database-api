@@ -3,7 +3,7 @@ import time
 import os
 import json
 
-credentials = json.loads(os.environ.get("credentials"))
+credentials = json.loads(os.environ.get("credentials").replace("\\\\", "\\"))
 
 serviceAccount = gspread.service_account_from_dict(credentials)
 database = serviceAccount.open("Better Lectio")
