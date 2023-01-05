@@ -1,7 +1,11 @@
 import gspread
 import time
+import os
+import json
 
-serviceAccount = gspread.service_account(filename="credentials.json")
+credentials = json.loads(os.environ.get("credentials"))
+
+serviceAccount = gspread.service_account_from_dict(credentials)
 database = serviceAccount.open("Better Lectio")
 brugerDatabase = database.worksheet("Brugere")
 
