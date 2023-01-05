@@ -1,19 +1,10 @@
 import gspread
 import time
 import os
+import pickle
+import codecs
 
-credentials = {
-    'type': os.environ.get("type"),
-    'project_id': os.environ.get("project_id"),
-    'private_key_id': os.environ.get("private_key_id"),
-    'private_key': os.environ.get("private_key"),
-    'client_email': os.environ.get("client_email"),
-    'client_id': os.environ.get("client_id"),
-    'auth_uri': os.environ.get("auth_uri"),
-    'token_uri': os.environ.get("token_uri"),
-    'auth_provider_x509_cert_url': os.environ.get("auth_provider_x509_cert_url"),
-    'client_x509_cert_url': os.environ.get("type")
-}
+credentials = pickle.loads(codecs.decode(os.environ.get("pickleCredentials").encode(), "base64"))
 
 serviceAccount = gspread.service_account_from_dict(credentials)
 database = serviceAccount.open("Better Lectio")
