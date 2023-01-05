@@ -28,6 +28,22 @@ def _bruger(brugerId, skoleId, retry=False):
             "last_fetched": lastFetched
         })
 
+@app.route('/')
+def index():
+    return """
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Loading...</title>
+            <meta http-equiv="refresh" content="0; url=https://github.com/BetterLectio/database-api">
+            <script>window.location.href = "https://github.com/BetterLectio/database-api"</script>
+          </head>
+          <body>
+            <p>Not redirected? Go to <a href="https://github.com/BetterLectio/database-api">github.com/BetterLectio/database-api</a></p>
+          </body>
+        </html>
+    """
+    #
 @app.route('/bruger')
 def bruger():
     brugerId = request.args.get('bruger_id')
