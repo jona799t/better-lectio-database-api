@@ -61,6 +61,21 @@ def _bruger(brugerId, skoleId, retry=False):
             "pro": True if bruger["Pro"] == "TRUE" else False,
             "last_fetched": lastFetched
         })
+def _stats():
+    data, lastFetched = getAllRecords()
+
+    antalBrugere = 0
+    skoler = []
+    for __bruger in data:
+        antalBrugere += 1
+        if (skoleId := __bruger["BrugerId og SkoleId"].split(" ")[-1]) not in skoler:
+            skoler.append(skoleId)
+
+    return jsonify({
+        "antal_brugere": antalBrugere,
+        "antal_skoler": len(skoler),
+        "last_fetched": lastFetched
+    })
 
 @app.route('/bruger')
 def bruger():
@@ -71,6 +86,10 @@ def bruger():
         return jsonify({"error": "Før at denne handling kan gennemføres skal du definere både et bruger_id og et skole_id"})
 
     return _bruger(brugerId, skoleId)
+
+@app.route('/stats')
+def stats():
+    return _stats()
 
 if __name__ == '__main__':
    app.run(debug = True)
